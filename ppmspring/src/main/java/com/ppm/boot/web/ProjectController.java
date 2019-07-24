@@ -29,7 +29,7 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 	
-	@PostMapping("")
+	@PostMapping("/edit")
 	public ResponseEntity<?> createProject(@Valid @RequestBody Project project, BindingResult result){
 		if(result.hasErrors()) {		
 			
