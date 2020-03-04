@@ -12,4 +12,7 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 	
 
 	public Iterable<Project> findAll();
+	
+	public Iterable<Project> findAllByProjectLeader(String username);
+
 }

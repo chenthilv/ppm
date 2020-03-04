@@ -1,0 +1,15 @@
+docker run --name ppm-mysql -e MYSQL_ROOT_PASSWORD=pass -d mysql:latest
+
+mapping port for outside access:
+
+docker run --name ppm-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d mysql:latest
+
+to get bash:
+
+docker exec -it ppm-mysql bash
+
+to login into mysql console:
+
+ mysql -P 3306 --protocol=tcp -u root -p
+ enter password : pass
+

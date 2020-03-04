@@ -1,5 +1,6 @@
 package com.ppm.boot.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 	
-	@PostMapping("/edit")
-	public ResponseEntity<?> createProject(@Valid @RequestBody Project project, BindingResult result){
+	@PostMapping("/create")
+	public ResponseEntity<?> createProject(@Valid @RequestBody Project project, BindingResult result, Principal principal){
 		if(result.hasErrors()) {		
 			
 			List<ValidationErrors> validationErrorsList = new ArrayList<>();
@@ -44,20 +45,20 @@ public class ProjectController {
 			}
 			return new ResponseEntity<List<ValidationErrors>>(validationErrorsList,HttpStatus.BAD_REQUEST);
 		}
-		Project response = projectService.saveOrUpdate(project);
+		Project response = projectService.saveOrUpdate(project, principal.getName());
 		return new ResponseEntity<Project>(response, HttpStatus.CREATED);
 		
 	}
 	
-	@GetMapping("/{projectId}")
+	@GetMapping("/{projectId}") 
 	public ResponseEntity<?> getProjectById(@PathVariable String projectId){
 		Project project = projectService.findProjectByIdentifier(projectId);
 		return new ResponseEntity<Project>(project, HttpStatus.FOUND);
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<?> getAllProjects(){
-		Iterable<Project> projects = projectService.findAllProjects();
+	public ResponseEntity<?> getAllProjects(Principal principal){
+		Iterable<Project> projects = projectService.findAllProjects(principal.getName());
 		return new ResponseEntity<Iterable<Project>>(projects, HttpStatus.OK);
 	}
 	

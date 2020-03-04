@@ -26,11 +26,12 @@ public class Backlog {
 	private String projectIdentifier;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "project_id", nullable = false)
+	@JoinColumn(name = "id", nullable = false)
 	@JsonIgnore
 	private Project project;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "backlog")
+	@JsonIgnore
 	private List<ProjectTask> projectTask;
 	
 
